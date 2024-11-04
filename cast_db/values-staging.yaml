@@ -3,7 +3,7 @@ image:
   repository: "postgres"
   tag: "12.0-alpine"
   pullPolicy: IfNotPresent
-  name: "castdb_service"
+  name: "castdb-service"
   namespace: "staging"
   label: "postgres"
 service:
