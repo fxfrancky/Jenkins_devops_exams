@@ -76,7 +76,7 @@ stage('Deploiement cast db en dev'){
                 echo $KUBECONFIG > .kube/config
                 cp cast_db/values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install castdb-chart ./cast_db --values=values.yml --namespace dev --set image.namespace=dev
+                helm upgrade --install castdb-chart ./cast_db --values=values.yml --namespace=dev --set image.namespace=dev
                 '''
                 }
             }
@@ -96,7 +96,7 @@ stage('Deploiement movie db en dev'){
                 echo $KUBECONFIG > .kube/config
                 cp movie_db/values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install moviedb-chart ./movie_db --values=values.yml --namespace dev --set image.namespace=dev
+                helm upgrade --install moviedb-chart ./movie_db --values=values.yml --namespace=dev --set image.namespace=dev
                 '''
                 }
             }
@@ -117,7 +117,7 @@ stage('Deploiement cast service en dev'){
 				cd cast_service
                 cp fastapi/values.yaml values.yml
                 cat values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.name=cast_service --set service.port=8001
+                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.name=cast_service --set service.port=8001
                 '''
                 }
             }
@@ -138,7 +138,7 @@ stage('Deploiement movie service en dev'){
 				cd movie_service
                 cp fastapi/values.yaml values.yml
                 cat values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.name=movie_service --set service.port=8000
+                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.name=movie_service --set service.port=8000
                 '''
                 }
             }
