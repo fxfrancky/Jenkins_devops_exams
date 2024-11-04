@@ -1,8 +1,8 @@
 pipeline {
 environment { // Declaration of environment variables
 DOCKER_ID = "fxfrancky2" // replace this with your docker-id
-DOCKER_IMAGE_MOVIE = "movie_microservice"
-DOCKER_IMAGE_CAST = "cast_microservice"
+DOCKER_IMAGE_MOVIE = "movie_service"
+DOCKER_IMAGE_CAST = "cast_service"
 DOCKER_TAG = "v.${BUILD_ID}.0" // we will tag our images with the current build in order to increment the value by 1 with each new build
 }
 agent any // Jenkins will be able to select all available agents
@@ -12,8 +12,8 @@ stages {
                 script {
                 sh '''
                  docker rm -f jenkins
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie-service
-				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast-service
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie_service
+				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast_service
                 sleep 6
                 '''
                 }
@@ -39,7 +39,6 @@ stages {
                     '''
                     }
             }
-
         }
         stage('Docker Push'){ //we pass the built image to our docker hub account
             environment
@@ -57,7 +56,6 @@ stages {
                 '''
                 }
             }
-
         }
 
 stage('Deploiement cast db en dev'){
@@ -78,7 +76,6 @@ stage('Deploiement cast db en dev'){
                 '''
                 }
             }
-
         }
 stage('Deploiement movie db en dev'){
         environment
@@ -98,7 +95,6 @@ stage('Deploiement movie db en dev'){
                 '''
                 }
             }
-
         }
 stage('Deploiement cast service en dev'){
         environment
@@ -119,7 +115,6 @@ stage('Deploiement cast service en dev'){
                 '''
                 }
             }
-
         }
 stage('Deploiement movie service en dev'){
         environment
@@ -140,7 +135,6 @@ stage('Deploiement movie service en dev'){
                 '''
                 }
             }
-
         }
 }
 }
