@@ -112,7 +112,7 @@ stage('Deploiement movie db en dev'){
 stage('Deploiement cast service en dev'){
         environment
         {
-        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        KUBECONFIG = credentials("config")
         }
             steps {
                 script {
