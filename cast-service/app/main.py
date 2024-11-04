@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 from app.api.casts import casts
 from app.api.db import metadata, database, engine
 
@@ -15,3 +16,6 @@ async def shutdown():
     await database.disconnect()
 
 app.include_router(casts, prefix='/api/v1/casts', tags=['casts'])
+
+if __name__ == "__main__":
+   uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -5,7 +5,10 @@ from sqlalchemy import (Column, DateTime, Integer, MetaData, String, Table,
 
 from databases import Database
 
-DATABASE_URI = os.getenv('DATABASE_URI')
+POSTGRES_USER : str = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_DB : str = os.getenv("POSTGRES_DB")
+DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@movie-service:5432/{POSTGRES_DB}"
 
 engine = create_engine(DATABASE_URI)
 metadata = MetaData()

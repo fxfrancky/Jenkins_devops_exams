@@ -1,0 +1,53 @@
+replicaCount: 1
+
+image:
+  repository: ""
+  pullPolicy: "Always"
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+
+service:
+  type: LoadBalancer 
+  port: ""
+  targetPort: 8000
+  name: 
+  host: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  port: 80
+  hosts:
+    - host: fastapi-gateway.prod
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+namespace: dev 
+
+env:
+ CAST_SERVICE_HOST_URL: http://cast_service:8000/api/v1/casts/          
+ SERVER_PORT: 8000

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.image.label }}-statefulset
+  namespace: {{ .Values.image.namespace }}
+  labels:
+    app: {{ .Values.image.label }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.image.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.image.label }}
+    spec:
+      containers:
+        - name:     {{ .Values.image.label }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - name: {{ .Values.service.name }}
+              containerPort: {{ .Values.service.port }}
+              protocol: {{ .Values.service.protocol }}
+          envFrom:
+            - secretRef:
+                name: castdb-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb-volume-1
+      volumes:
+        - emptyDir: {}
+          name: postgredb-volume-1
