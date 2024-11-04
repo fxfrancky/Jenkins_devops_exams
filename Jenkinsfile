@@ -27,8 +27,8 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8001:8000 --name jenkins $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
-					docker run -d -p 8002:8000 --name jenkins $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                    docker run -d -p 8001:8000 --name movie_service $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+					docker run -d -p 8002:8000 --name cast_service $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                     sleep 10
                     '''
                     }
