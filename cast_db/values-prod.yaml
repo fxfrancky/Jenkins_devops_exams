@@ -3,8 +3,8 @@ image:
   repository: "postgres"
   tag: "12.0-alpine"
   pullPolicy: IfNotPresent
-  name: "cast-service"
-  namespace: ""
+  name: "castdb_service"
+  namespace: "prod"
   label: "postgres"
 service:
   name: postgres-port

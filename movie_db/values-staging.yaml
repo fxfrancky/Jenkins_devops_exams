@@ -3,8 +3,8 @@ image:
   repository: "postgres"
   tag: "12.0-alpine"
   pullPolicy: IfNotPresent
-  name: "movie-service"
-  namespace: ""
+  name: "moviedb_service"
+  namespace: "staging"
   label: "postgres"
 service:
   name: postgres-port
