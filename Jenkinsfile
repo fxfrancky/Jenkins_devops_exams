@@ -12,8 +12,11 @@ stages {
                 script {
                 sh '''
                  docker rm -f jenkins
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie_service
-				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast_service
+				 pwd
+				 cd movie_service
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
+				 cd ../cast_service
+				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG .
                 sleep 6
                 '''
                 }
@@ -68,7 +71,8 @@ stage('Deploiement cast db en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
-                ls
+                pwd
+				ls				
                 echo $KUBECONFIG > .kube/config
                 cp cast_db/values-dev.yaml values.yml
                 cat values.yml
@@ -87,6 +91,7 @@ stage('Deploiement movie db en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
+				pwd
                 ls
                 echo $KUBECONFIG > .kube/config
                 cp movie_db/values-dev.yaml values.yml
@@ -106,6 +111,7 @@ stage('Deploiement cast service en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
+				pwd
                 ls
                 cat $KUBECONFIG > .kube/config
 				cd cast_service
@@ -126,6 +132,7 @@ stage('Deploiement movie service en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
+				pwd
                 ls
                 cat $KUBECONFIG > .kube/config
 				cd movie_service
