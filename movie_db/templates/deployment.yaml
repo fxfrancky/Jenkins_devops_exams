@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.image.label }}-statefulset
+  name: {{ .Values.image.name }}-statefulset
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.label }}
+    app: {{ .Values.image.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
