@@ -75,9 +75,10 @@ stage('Deploiement cast db en dev'){
                 pwd
 				ls				
                 echo $KUBECONFIG > .kube/config
-                cp cast_db/values-dev.yaml values.yml
+				cd cast_db
+                cp values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install castdb-chart ./cast_db --values=values.yml --namespace=dev --set image.namespace=dev
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev
                 '''
                 }
             }
@@ -95,9 +96,10 @@ stage('Deploiement movie db en dev'){
 				pwd
                 ls
                 echo $KUBECONFIG > .kube/config
-                cp movie_db/values-dev.yaml values.yml
+				cd movie_db
+                cp values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install moviedb-chart ./movie_db --values=values.yml --namespace=dev --set image.namespace=dev
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev
                 '''
                 }
             }
