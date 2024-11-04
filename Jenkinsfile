@@ -16,10 +16,11 @@ stages {
 				 pwd
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
+				 sleep 6
 				 cd ..
 				 cd cast_service
 				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG .
-                sleep 6
+				 sleep 6
                 '''
                 }
             }
@@ -29,6 +30,7 @@ stages {
                     script {
                     sh '''
                     docker run -d -p 8001:8000 --name movie_service $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+					sleep 10
 					docker run -d -p 8002:8000 --name cast_service $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                     sleep 10
                     '''
@@ -57,7 +59,9 @@ stages {
                 sh '''
                 docker login -u $DOCKER_ID -p $DOCKER_PASS
                 docker push $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+				sleep 6
 				docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+				sleep 6
                 '''
                 }
             }
