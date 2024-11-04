@@ -15,7 +15,8 @@ stages {
 				 pwd
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
-				 cd ../cast_service
+				 cd ..
+				 cd cast_service
 				 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG .
                 sleep 6
                 '''
