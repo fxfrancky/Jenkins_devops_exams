@@ -11,7 +11,8 @@ stages {
             steps {
                 script {
                 sh '''
-                 docker rm -f jenkins
+                 docker rm -f movie_service
+                 docker rm -f cast_service
 				 pwd
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
