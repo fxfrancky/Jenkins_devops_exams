@@ -18,10 +18,10 @@ podSecurityContext: {}
 securityContext: {}
 
 service:
-  type: ClusterIP 
+  type: LoadBalancer 
   port:
   targetPort:
-  name: ""
+  name: "cast"
   host: ""
 
 ingress:

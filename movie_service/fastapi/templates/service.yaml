@@ -9,7 +9,7 @@ spec:
   selector:
     app: {{ .Values.service.name }}
   ports:
-  - name: http
+  - name: movie-port
     protocol: TCP
     port: {{ .Values.service.port }}
     targetPort: {{ .Values.service.port }}

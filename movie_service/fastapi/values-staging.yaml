@@ -21,7 +21,7 @@ service:
   type: LoadBalancer 
   port: ""
   targetPort: ""
-  name: ""
+  name: "movie"
   host: ""
 
 ingress:

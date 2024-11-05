@@ -28,6 +28,6 @@ spec:
             - secretRef:
                 name: moviedb-secret
           ports:
-            - name: http
+            - name: movie-port
               containerPort: {{ .Values.service.port }}
               protocol: TCP

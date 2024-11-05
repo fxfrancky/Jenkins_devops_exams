@@ -26,6 +26,6 @@ spec:
             - secretRef:
                 name: castdb-secret
           ports:
-            - name: http
+            - name: cast-port
               containerPort: {{ .Values.service.port }}
               protocol: TCP
