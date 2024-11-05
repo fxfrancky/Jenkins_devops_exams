@@ -40,8 +40,8 @@ spec:
                   key: POSTGRES_DB
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgres-pv-claim
+              name: postgres-pv-claim2
       volumes:
-      - name: postgres-pv-claim
+      - name: postgres-pv-claim2
         persistentVolumeClaim:
-          claimName: postgres-pv-claim
+          claimName: postgres-pv-claim2
