@@ -40,7 +40,8 @@ spec:
                   key: POSTGRES_DB
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: {{ .Values.service.name }}-volume-1
+              name: postgres-pv-claim
       volumes:
-        - emptyDir: {}
-          name: {{ .Values.service.name }}-volume-1
+      - name: postgres-pv-claim
+        persistentVolumeClaim:
+          claimName: postgres-pv-claim
