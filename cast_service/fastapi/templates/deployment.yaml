@@ -21,11 +21,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: SERVER_PORT
-              value: {{ .Values.env.SERVER_PORT }}
+              value: "{{ .Values.env.SERVER_PORT }}"
           envFrom:
             - secretRef:
                 name: castdb-secret
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: "{{ .Values.service.port }}"
               protocol: TCP

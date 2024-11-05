@@ -23,11 +23,11 @@ spec:
             - name: CAST_SERVICE_HOST_URL
               value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
             - name: SERVER_PORT
-              value: {{ .Values.env.SERVER_PORT }}
+              value: "{{ .Values.env.SERVER_PORT }}"
           envFrom:
             - secretRef:
                 name: moviedb-secret
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: "{{ .Values.service.port }}"
               protocol: TCP
