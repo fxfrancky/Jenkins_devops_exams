@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: "postgres"
   tag: "12.0-alpine"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   name: "moviedb"
   namespace: "dev"
   label: "moviedb"
