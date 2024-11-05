@@ -21,7 +21,7 @@ service:
   type: LoadBalancer 
   port: ""
   targetPort: 8000
-  name: ""
+  name: "cast_service"
   host: ""
 
 ingress:
