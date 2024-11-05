@@ -7,6 +7,6 @@ image:
   namespace: "dev"
   label: "postgres"
 service:
-  name: postgres-port
+  name: castdb-port
   type: ClusterIP
   port: 5432
