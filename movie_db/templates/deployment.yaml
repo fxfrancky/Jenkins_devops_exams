@@ -38,6 +38,10 @@ spec:
                 configMapKeyRef:
                   name: moviedb-config
                   key: POSTGRES_DB
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "pg_ctl -D /var/lib/postgres/data -w -t 60 -m fast stop"]
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-pv-claim2
