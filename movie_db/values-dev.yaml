@@ -3,9 +3,9 @@ image:
   repository: "postgres"
   tag: "12.0-alpine"
   pullPolicy: IfNotPresent
-  name: ""
+  name: "moviedb"
   namespace: "dev"
-  label: "postgres"
+  label: "moviedb"
 service:
   name: moviedb-port
   type: ClusterIP

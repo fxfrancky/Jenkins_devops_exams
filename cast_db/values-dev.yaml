@@ -5,7 +5,7 @@ image:
   pullPolicy: IfNotPresent
   name: "castdb"
   namespace: "dev"
-  label: "postgres"
+  label: "castdb"
 service:
   name: castdb-port
   type: ClusterIP
