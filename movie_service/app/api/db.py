@@ -7,7 +7,9 @@ from databases import Database
 POSTGRES_USER : str = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB : str = os.getenv("POSTGRES_DB")
-DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@moviedb-service:5432/{POSTGRES_DB}"
+SERVICE = "moviedb-service"
+PORT = 5432
+DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{SERVICE}:{PORT}/{POSTGRES_DB}"
 
 engine = create_engine(DATABASE_URI)
 metadata = MetaData()
