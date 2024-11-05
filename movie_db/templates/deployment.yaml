@@ -9,14 +9,14 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.image.label }}
+      app: postgres
   template:
     metadata:
       labels:
-        app: {{ .Values.image.label }}
+        app: postgres
     spec:
       containers:
-        - name:     {{ .Values.image.label }}
+        - name:  {{ .Values.image.label }}
           image: postgres
           ports:
             - name: {{ .Values.service.name }}
