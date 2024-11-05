@@ -22,6 +22,8 @@ spec:
           env:
             - name: CAST_SERVICE_HOST_URL
               value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
+            - name: SERVER_PORT
+              value: {{ .Values.env.SERVER_PORT }}
           envFrom:
             - secretRef:
                 name: moviedb-secret

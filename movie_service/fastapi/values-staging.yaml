@@ -20,7 +20,7 @@ securityContext: {}
 service:
   type: LoadBalancer 
   port: ""
-  targetPort: 8001
+  targetPort: ""
   name: ""
   host: ""
 

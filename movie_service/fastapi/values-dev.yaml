@@ -20,7 +20,7 @@ securityContext: {}
 service:
   type: LoadBalancer 
   port: ""
-  targetPort: 8000
+  targetPort: ""
   name: ""
   host: ""
 
@@ -50,4 +50,4 @@ namespace: dev
 
 env:
  CAST_SERVICE_HOST_URL: http://cast-service:8002/api/v1/casts/          
- SERVER_PORT: 8000
+ SERVER_PORT: 8001

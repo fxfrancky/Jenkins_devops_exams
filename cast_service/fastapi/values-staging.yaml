@@ -20,7 +20,7 @@ securityContext: {}
 service:
   type: LoadBalancer 
   port: ""
-  targetPort: 8001
+  targetPort: ""
   name: ""
   host: ""
 
@@ -49,4 +49,4 @@ affinity: {}
 namespace: staging 
 
 env:          
- SERVER_PORT: 8001
+ SERVER_PORT: 8002

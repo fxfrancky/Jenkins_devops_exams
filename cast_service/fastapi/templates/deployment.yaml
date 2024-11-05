@@ -19,6 +19,9 @@ spec:
         - name: {{ .Values.service.name }}
           image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SERVER_PORT
+              value: {{ .Values.env.SERVER_PORT }}
           envFrom:
             - secretRef:
                 name: castdb-secret

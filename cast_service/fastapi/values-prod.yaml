@@ -20,7 +20,7 @@ securityContext: {}
 service:
   type: LoadBalancer 
   port: ""
-  targetPort: 8000
+  targetPort: ""
   name: ""
   host: ""
 
@@ -49,4 +49,4 @@ affinity: {}
 namespace: prod 
 
 env:          
- SERVER_PORT: 8003
+ SERVER_PORT: 8002
