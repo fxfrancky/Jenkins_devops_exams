@@ -17,35 +17,35 @@ spec:
           service:
             name: {{ .Values.service.name }}-service
             port:
-              number: "{{ .Values.service.port }}"
+              number: {{ .Values.service.port }}
       - path: /api/login
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
-              number: "{{ .Values.service.port }}"
+              number: {{ .Values.service.port }}
       - path: /docs
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
-              number: "{{ .Values.service.port }}"
+              number: {{ .Values.service.port }}
       - path: /api/users
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
-              number: "{{ .Values.service.port }}"
+              number: {{ .Values.service.port }}
       - path: /api/orders
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
-              number: "{{ .Values.service.port }}"    
+              number: {{ .Values.service.port }}    
 
               
 
