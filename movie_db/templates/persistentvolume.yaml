@@ -1,5 +1,5 @@
-ind: PersistentVolume
 apiVersion: v1
+kind: PersistentVolume
 metadata:
   name: postgres-pv2
   namespace: {{ .Values.image.namespace }}
