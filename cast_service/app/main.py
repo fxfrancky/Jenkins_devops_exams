@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
-from app.api.casts import casts
-from app.api.db import metadata, database, engine
+from api.casts import casts
+from api.db import metadata, database, engine
 import os
 
 metadata.create_all(engine)

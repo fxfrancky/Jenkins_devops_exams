@@ -1,6 +1,5 @@
-from app.api.models import MovieIn, MovieOut, MovieUpdate
-from app.api.db import movies, database
-
+from api.models import MovieIn, MovieOut, MovieUpdate
+from api.db import movies, database
 
 async def add_movie(payload: MovieIn):
     query = movies.insert().values(**payload.dict())

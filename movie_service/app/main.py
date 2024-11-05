@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
-from app.api.movies import movies
-from app.api.db import metadata, database, engine
+from api.movies import movies
+from api.db import metadata, database, engine
 import os
 
 metadata.create_all(engine)

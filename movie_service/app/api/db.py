@@ -2,7 +2,6 @@ import os
 
 from sqlalchemy import (Column, DateTime, Integer, MetaData, String, Table,
                         create_engine, ARRAY)
-
 from databases import Database
 
 POSTGRES_USER : str = os.getenv("POSTGRES_USER")
