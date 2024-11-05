@@ -22,9 +22,22 @@ spec:
             - name: {{ .Values.service.name }}
               containerPort: 5432
               protocol: TCP
-          envFrom:
-            - secretRef:
-                name: castdb-secret
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: castdb-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: castdb-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: castdb-config
+                  key: POSTGRES_DB
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: {{ .Values.service.name }}-volume-1
