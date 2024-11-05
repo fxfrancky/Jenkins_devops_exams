@@ -81,7 +81,7 @@ stage('Deploiement cast db en dev'){
 				cd cast_db
                 cp values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
                 '''
                 }
             }
@@ -102,7 +102,7 @@ stage('Deploiement movie db en dev'){
 				cd movie_db
                 cp values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
                 '''
                 }
             }
