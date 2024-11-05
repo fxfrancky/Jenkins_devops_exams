@@ -27,7 +27,7 @@ spec:
                 name: moviedb-secret
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgredb-volume-1
+              name: {{ .Values.service.name }}-volume-1
       volumes:
         - emptyDir: {}
-          name: postgredb-volume-1
+          name: {{ .Values.service.name }}-volume-1
