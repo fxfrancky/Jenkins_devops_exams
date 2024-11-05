@@ -24,7 +24,7 @@ spec:
               value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
           envFrom:
             - secretRef:
-                name: movie-secret
+                name: moviedb-secret
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
