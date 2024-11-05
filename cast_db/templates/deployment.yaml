@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
         - name:     {{ .Values.image.name }}
-          image: "postgres:12.1-alpine"
+          image: postgres
           ports:
             - name: {{ .Values.service.name }}
-              containerPort: {{ .Values.service.port }}
-              protocol: {{ .Values.service.protocol }}
+              containerPort: 5432
+              protocol: TCP
           envFrom:
             - secretRef:
                 name: castdb-secret

@@ -9,4 +9,4 @@ image:
 service:
   name: moviedb-port
   type: ClusterIP
-  port: 5433
+  port: 5432

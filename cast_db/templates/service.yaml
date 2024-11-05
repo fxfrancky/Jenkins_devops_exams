@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.image.name }}-service
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: postgres
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: castdb-port
   selector:
-    app: {{ .Values.image.name }}
+    app: postgres

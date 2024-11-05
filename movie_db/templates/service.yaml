@@ -8,9 +8,9 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    - port: 5432
+      targetPort: 5432
       protocol: TCP
       name: moviedb-port
   selector:
-    app: {{ .Values.image.name }}
+    app: postgres
