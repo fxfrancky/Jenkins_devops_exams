@@ -49,5 +49,5 @@ affinity: {}
 namespace: prod 
 
 env:
- CAST_SERVICE_HOST_URL: http://cast_service:8000/api/v1/casts/       
+ CAST_SERVICE_HOST_URL: http://cast-service:8002/api/v1/casts/       
  SERVER_PORT: 8003
