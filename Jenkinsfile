@@ -65,11 +65,11 @@ stages {
             }
         }
 
-stage('Deploiement cast db en dev'){
-        environment
-        {
-        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-        }
+        stage('Deploiement cast db en dev'){
+            environment
+            {
+				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+			}
             steps {
                 script {
                 sh '''
@@ -80,16 +80,38 @@ stage('Deploiement cast db en dev'){
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
+				sleep 10
+                '''
+                }
+            }
+        }
+		
+		stage('Deploiement movie db en dev'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd movie_db
+                cp values-dev.yaml values.yml
+                cat values.yml
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
+				sleep 10
                 '''
                 }
             }
         }
 
-stage('Deploiement cast service en dev'){
-        environment
-        {
-        KUBECONFIG = credentials("config")
-        }
+		stage('Deploiement cast service en dev'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
             steps {
                 script {
                 sh '''
@@ -104,28 +126,6 @@ stage('Deploiement cast service en dev'){
                 }
             }
         }
-		
-		
-stage('Deploiement movie db en dev'){
-        environment
-        {
-        KUBECONFIG = credentials("config")
-        }
-            steps {
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                echo $KUBECONFIG > .kube/config
-				cd movie_db
-                cp values-dev.yaml values.yml
-                cat values.yml
-                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
-                '''
-                }
-            }
-        }
-
 
 stage('Deploiement movie service en dev'){
         environment
