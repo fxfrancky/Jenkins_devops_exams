@@ -24,4 +24,5 @@ casts = Table(
     Column('nationality', String(20)),
 )
 
+
 database = Database(DATABASE_URI)

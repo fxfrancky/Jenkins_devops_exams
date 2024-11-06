@@ -24,4 +24,5 @@ movies = Table(
     Column('casts_id', ARRAY(Integer))
 )
 
+
 database = Database(DATABASE_URI)
