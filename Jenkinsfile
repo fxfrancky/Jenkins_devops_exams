@@ -104,5 +104,52 @@ stage('Deploiement cast service en dev'){
                 }
             }
         }
+		
+		
+stage('Deploiement movie db en dev'){
+        environment
+        {
+        KUBECONFIG = credentials("config")
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+				pwd
+                ls
+                echo $KUBECONFIG > .kube/config
+				cd movie_db
+                cp values-dev.yaml values.yml
+                cat values.yml
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
+                '''
+                }
+            }
+        }
+
+
+stage('Deploiement movie service en dev'){
+        environment
+        {
+        KUBECONFIG = credentials("config")
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+				pwd
+                ls
+                cat $KUBECONFIG > .kube/config
+				cd movie_service
+                cp fastapi/values-dev.yaml values.yml
+                cat values.yml
+                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001
+                '''
+                }
+            }
+        }
+		
 }
 }
