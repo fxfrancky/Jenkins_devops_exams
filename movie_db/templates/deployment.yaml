@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name:  {{ .Values.image.label }}
-          image: 'postgres:12.1-alpine'
+          image: 'postgres:latest'
           ports:
             - name: {{ .Values.service.name }}
               containerPort: 5432
