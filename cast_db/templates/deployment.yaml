@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.image.name }}
-          image: 'postgres:12.1-alpine'
+          image: 'postgres:13'
           command: ["/bin/sh", "-ec", "sleep 1000"]
           ports:
             - name: {{ .Values.service.name }}
