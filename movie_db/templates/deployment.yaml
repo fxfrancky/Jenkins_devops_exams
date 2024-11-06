@@ -16,7 +16,7 @@ spec:
         app: moviedb
     spec:
       containers:
-        - name:  {{ .Values.image.label }}
+        - name: {{ .Values.image.name }}
           image: 'postgres:14'
           ports:
             - name: {{ .Values.service.name }}
