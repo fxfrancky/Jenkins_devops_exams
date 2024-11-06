@@ -81,7 +81,7 @@ stage('Deploiement cast db en dev'){
 				cd cast_db
                 cp values-dev.yaml values.yml
                 cat values.yml
-				helm install --name castdb-postgres --set 'postgresqlUsername=cast_db_username' --set 'postgresqlPassword=cast_db_password' --set 'postgresqlDatabase=cast_db_dev' stable/postgresql
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
                 '''
                 }
             }
