@@ -31,8 +31,8 @@ spec:
               value: movie_db_dev
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgres-pv-claim2
+              name: postgres-pv-claim
       volumes:
-      - name: postgres-pv-claim2
+      - name: postgres-pv-claim
         persistentVolumeClaim:
-          claimName: postgres-pv-claim2
+          claimName: postgres-pv-claim
