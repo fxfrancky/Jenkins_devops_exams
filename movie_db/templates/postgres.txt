@@ -1,0 +1,9 @@
+https://blog.361way.com/huaweicloud-cce-helm-install-pgsql/8561.html
+
+
+https://blog.stonegarden.dev/articles/2024/10/k8s-postgres/
+
+
+https://tyk.io/docs/deployment-and-operations/tyk-self-managed/deployment-lifecycle/installations/kubernetes/tyk-helm-tyk-stack-postgresql/
+
+https://www.bmc.com/blogs/kubernetes-postgresql/

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app: postgres
+    app: castdb
   name: postgres-pv-claim
   namespace: {{ .Values.image.namespace }}
 spec:

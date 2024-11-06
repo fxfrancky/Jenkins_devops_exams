@@ -4,12 +4,12 @@ metadata:
   name: {{ .Values.image.name }}-statefulset
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: castdb
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: postgres
+      app: castdb
   template:
     metadata:
       labels:
@@ -24,20 +24,11 @@ spec:
               protocol: TCP
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: castdb-secret
-                  key: POSTGRES_USER
+              value: cast_db_username
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: castdb-secret
-                  key: POSTGRES_PASSWORD
+              value: cast_db_password
             - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: castdb-config
-                  key: POSTGRES_DB
+              value: cast_db_dev
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-pv-claim
