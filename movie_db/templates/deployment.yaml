@@ -18,7 +18,6 @@ spec:
       containers:
         - name:  {{ .Values.image.label }}
           image: 'postgres:13'
-          command: ["/bin/sh", "-ec", "sleep 1000"]
           ports:
             - name: {{ .Values.service.name }}
               containerPort: 5432
