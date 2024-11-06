@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.service.name }}-deployment
+  name: movie-deployment
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.service.name }}
+    app: movie
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.service.name }}
+      app: movie
   template:
     metadata:
       labels:
-        app: {{ .Values.service.name }}
+        app: movie
     spec:
       containers:
         - name: {{ .Values.service.name }}
@@ -24,9 +24,12 @@ spec:
               value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
-          envFrom:
-            - secretRef:
-                name: moviedb-secret
+            - name: POSTGRES_USER
+              value: movie_db_username
+            - name: POSTGRES_PASSWORD
+              value: movie_db_password
+            - name: POSTGRES_DB
+              value: movie_db_dev
           ports:
             - name: movie-port
               containerPort: {{ .Values.service.port }}

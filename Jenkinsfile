@@ -121,7 +121,7 @@ stages {
 				cd cast_service
                 cp fastapi/values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002
+                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
                 '''
                 }
             }
@@ -141,7 +141,7 @@ stage('Deploiement movie service en dev'){
 				cd movie_service
                 cp fastapi/values-dev.yaml values.yml
                 cat values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001
+                helm upgrade --install app fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
                 '''
                 }
             }

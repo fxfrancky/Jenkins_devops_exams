@@ -4,10 +4,10 @@ metadata:
   name: cast-service
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.service.name }}
+    app: cast
 spec:
   selector:
-    app: {{ .Values.service.name }}
+    app: cast
   ports:
   - name: cast-port
     protocol: TCP

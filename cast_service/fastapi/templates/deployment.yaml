@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.service.name }}-deployment
+  name: cast-deployment
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.service.name }}
+    app: cast
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.service.name }}
+      app: cast
   template:
     metadata:
       labels:
-        app: {{ .Values.service.name }}
+        app: cast
     spec:
       containers:
         - name: {{ .Values.service.name }}
@@ -22,9 +22,12 @@ spec:
           env:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
-          envFrom:
-            - secretRef:
-                name: castdb-secret
+            - name: POSTGRES_USER
+              value: cast_db_username
+            - name: POSTGRES_PASSWORD
+              value: cast_db_password
+            - name: POSTGRES_DB
+              value: cast_db_dev
           ports:
             - name: cast-port
               containerPort: {{ .Values.service.port }}
