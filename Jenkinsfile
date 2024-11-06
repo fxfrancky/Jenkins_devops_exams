@@ -15,7 +15,6 @@ stages {
                  docker rm -f cast_service
                  docker rm -f castdb-statefulset-0
                  docker rm -f moviedb-statefulset-0 
-				 pwd
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
 				 sleep 6
@@ -76,8 +75,6 @@ stage('Deploiement cast db en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
-                pwd
-				ls				
                 echo $KUBECONFIG > .kube/config
 				cd cast_db
                 cp values-dev.yaml values.yml
@@ -98,8 +95,6 @@ stage('Deploiement cast service en dev'){
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
-				pwd
-                ls
                 cat $KUBECONFIG > .kube/config
 				cd cast_service
                 cp fastapi/values-dev.yaml values.yml
