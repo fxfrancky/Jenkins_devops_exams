@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres
+        app: castdb
     spec:
       containers:
         - name: {{ .Values.image.name }}
