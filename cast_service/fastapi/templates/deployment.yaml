@@ -15,6 +15,8 @@ spec:
       labels:
         app: {{ .Values.service.name }}
     spec:
+      restartPolicy: OnFailure
+      terminationGracePeriodSeconds: 0
       containers:
         - name: {{ .Values.service.name }}
           image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

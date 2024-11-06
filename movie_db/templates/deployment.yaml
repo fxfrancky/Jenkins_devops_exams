@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name:  {{ .Values.image.label }}
-          image: 'postgres:13'
+          image: 'postgres:14'
+          command: ["/bin/sh", "-ec", "sleep 1000"]
           ports:
             - name: {{ .Values.service.name }}
               containerPort: 5432
@@ -30,7 +31,7 @@ spec:
             - name: POSTGRES_DB
               value: movie_db_dev
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql/data2
               name: postgres-pv-claim2
       volumes:
       - name: postgres-pv-claim2
