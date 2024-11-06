@@ -4,40 +4,31 @@ metadata:
   name: {{ .Values.image.name }}-statefulset
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: moviedb
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: postgres
+      app: moviedb
   template:
     metadata:
       labels:
-        app: postgres
+        app: moviedb
     spec:
       containers:
         - name:  {{ .Values.image.label }}
-          image: 'postgres:13'
+          image: 'postgres:12.1-alpine'
           ports:
             - name: {{ .Values.service.name }}
               containerPort: 5432
               protocol: TCP
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: moviedb-secret
-                  key: POSTGRES_USER
+              value: movie_db_username
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: moviedb-secret
-                  key: POSTGRES_PASSWORD
+              value: movie_db_password
             - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: moviedb-config
-                  key: POSTGRES_DB
+              value: movie_db_dev
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-pv-claim2

@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.image.name }}-service
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: moviedb
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: moviedb-port
   selector:
-    app: postgres
+    app: moviedb
