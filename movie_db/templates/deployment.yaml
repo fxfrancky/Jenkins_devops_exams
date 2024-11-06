@@ -30,7 +30,7 @@ spec:
             - name: POSTGRES_DB
               value: movie_db_dev
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data2
+            - mountPath: /var/lib/postgresql/data
               name: postgres-pv-claim2
       volumes:
       - name: postgres-pv-claim2
