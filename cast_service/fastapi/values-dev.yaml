@@ -19,8 +19,8 @@ securityContext: {}
 
 service:
   type: ClusterIP 
-  port:
-  targetPort:
+  port: ""
+  targetPort: ""
   name: "cast"
   host: ""
 
