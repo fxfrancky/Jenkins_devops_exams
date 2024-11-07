@@ -18,7 +18,8 @@ spec:
       containers:
         - name: {{ .Values.service.name }}
           image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-ec", "sleep 100"]
           env:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"

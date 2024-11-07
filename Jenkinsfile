@@ -127,11 +127,11 @@ stages {
             }
         }
 
-stage('Deploiement movie service en dev'){
-        environment
-        {
-        KUBECONFIG = credentials("config")
-        }
+		stage('Deploiement movie service en dev'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
             steps {
                 script {
                 sh '''
