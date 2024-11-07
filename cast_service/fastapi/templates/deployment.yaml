@@ -6,7 +6,9 @@ metadata:
   labels:
     app: cast
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: cast
@@ -15,11 +17,18 @@ spec:
       labels:
         app: cast
     spec:
+      terminationGracePeriodSeconds: 60
       containers:
         - name: {{ .Values.service.name }}
           image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: Always
-          command: ["/bin/sh", "-ec", "sleep 500"]
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              memory: 600Mi
+              cpu: 1
+            requests:
+              memory: 300Mi
+              cpu: 500m
           env:
             - name: SERVER_PORT
               value: "8002"
