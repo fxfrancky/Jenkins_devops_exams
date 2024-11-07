@@ -19,7 +19,7 @@ spec:
         - name: {{ .Values.service.name }}
           image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
-          command: ["/bin/sh", "-ec", "sleep 100"]
+          command: ["/bin/sh", "-ec", "sleep 500"]
           env:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
