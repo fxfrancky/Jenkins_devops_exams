@@ -22,7 +22,7 @@ spec:
           command: ["/bin/sh", "-ec", "sleep 500"]
           env:
             - name: SERVER_PORT
-              value: "{{ .Values.env.SERVER_PORT }}"
+              value: "8002"
             - name: POSTGRES_USER
               value: cast_db_username
             - name: POSTGRES_PASSWORD
@@ -31,5 +31,5 @@ spec:
               value: cast_db_dev
           ports:
             - name: cast-port
-              containerPort: {{ .Values.service.port }}
+              containerPort: 8002
               protocol: TCP
