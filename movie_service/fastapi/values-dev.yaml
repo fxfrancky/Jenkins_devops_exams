@@ -4,6 +4,7 @@ image:
   repository: ""
   pullPolicy: "Always"
   tag: ""
+  label: "movie"
 
 nameOverride: ""
 fullnameOverride: ""
