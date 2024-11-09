@@ -35,20 +35,11 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.service.name }}-secret
-                  key: POSTGRES_USER
+              value: cast_db_username
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.service.name }}-secret
-                  key: POSTGRES_PASSWORD
+              value: cast_db_password
             - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.service.name }}-config
-                  key: POSTGRES_DB
+              value: cast_db_dev
           ports:
             - name: {{ .Values.service.name }}-port
               containerPort: 8002

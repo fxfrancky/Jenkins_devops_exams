@@ -32,7 +32,7 @@ stages {
                     sh '''
                     docker run -d -p 8001:8001 --name movie_service $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
 					docker run -d -p 8002:8002 --name cast_service $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
-                    sleep 20
+                    sleep 10
                     '''
                     }
                 }
@@ -60,7 +60,7 @@ stages {
                 docker login -u $DOCKER_ID -p $DOCKER_PASS
                 docker push $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
 				docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
-                sleep 20
+                sleep 10
                 '''
                 }
             }
@@ -81,7 +81,7 @@ stages {
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
-				sleep 20
+				sleep 10
                 '''
                 }
             }
@@ -102,7 +102,7 @@ stages {
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
-				sleep 20
+				sleep 10
                 '''
                 }
             }
