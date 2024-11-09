@@ -80,6 +80,7 @@ stages {
 				cd cast_db
                 cp values-dev.yaml values.yml
                 cat values.yml
+				helm secrets upgrade --install secret-castdb-chart -f secret.yaml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
 				sleep 10
                 '''
@@ -101,6 +102,7 @@ stages {
 				cd movie_db
                 cp values-dev.yaml values.yml
                 cat values.yml
+				helm secrets upgrade --install secret-moviedb-chart -f secret.yaml
                 helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
 				sleep 10
                 '''
