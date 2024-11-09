@@ -1,5 +1,5 @@
 pipeline {
-environment { // Declaration of environment variables
+environment { // Declaration of environment variables.
 DOCKER_ID = "fxfrancky2" // replace this with your docker-id
 DOCKER_IMAGE_MOVIE = "movie_service"
 DOCKER_IMAGE_CAST = "cast_service"
