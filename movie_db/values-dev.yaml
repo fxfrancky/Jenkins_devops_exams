@@ -10,3 +10,4 @@ service:
   name: moviedb-port
   type: ClusterIP
   port: 5432
+  label: "movie"

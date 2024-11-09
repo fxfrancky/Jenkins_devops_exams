@@ -10,3 +10,4 @@ service:
   name: castdb-port
   type: ClusterIP
   port: 5432
+  label: "cast"
