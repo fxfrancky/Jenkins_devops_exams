@@ -24,12 +24,21 @@ spec:
               value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
-            - name: POSTGRES_USER
-              value: movie_db_username
-            - name: POSTGRES_PASSWORD
-              value: movie_db_password
             - name: POSTGRES_DB
-              value: movie_db_dev
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.image.label }}-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.image.label }}-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.image.label }}-secret
+                  key: POSTGRES_PASSWORD
           ports:
             - name: movie-port
               containerPort: {{ .Values.service.port }}
