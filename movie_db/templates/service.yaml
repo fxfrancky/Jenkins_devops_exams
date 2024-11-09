@@ -4,13 +4,13 @@ metadata:
   name: {{ .Values.image.name }}-service
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: moviedb
+    app: {{ .Values.image.label }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: 5432
       targetPort: 5432
       protocol: TCP
-      name: moviedb-port
+      name: {{ .Values.image.label }}-port
   selector:
-    app: moviedb
+    app: {{ .Values.image.label }}

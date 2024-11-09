@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cast-deployment
+  name: {{ .Values.service.name }}-deployment
   namespace: {{ .Values.namespace }}
   labels:
-    app: cast
+    app: {{ .Values.service.name }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: cast
+      app: {{ .Values.service.name }}
   template:
     metadata:
       labels:
-        app: cast
+        app: {{ .Values.service.name }}
     spec:
       terminationGracePeriodSeconds: 60
       containers:
@@ -30,15 +30,26 @@ spec:
               memory: 300Mi
               cpu: 500m
           env:
+            - name: CAST_SERVICE_HOST_URL
+              value: {{ .Values.env.CAST_SERVICE_HOST_URL }}
             - name: SERVER_PORT
-              value: "8002"
+              value: "{{ .Values.env.SERVER_PORT }}"
             - name: POSTGRES_USER
-              value: cast_db_username
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.service.name }}-secret
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-              value: cast_db_password
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.service.name }}-secret
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_DB
-              value: cast_db_dev
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.service.name }}-config
+                  key: POSTGRES_DB
           ports:
-            - name: cast-port
+            - name: {{ .Values.service.name }}-port
               containerPort: 8002
               protocol: TCP

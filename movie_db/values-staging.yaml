@@ -1,12 +1,12 @@
 replicaCount: 1
 image:
   repository: "postgres"
-  tag: "12.0-alpine"
-  pullPolicy: IfNotPresent
-  name: ""
+  tag: "14"
+  pullPolicy: Always
+  name: "moviedb"
   namespace: "staging"
-  label: "postgres"
+  label: "movie"
 service:
-  name: postgres-port
+  name: moviedb-port
   type: ClusterIP
   port: 5432

@@ -25,11 +25,20 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
             - name: POSTGRES_USER
-              value: movie_db_username
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.service.name }}-secret
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-              value: movie_db_password
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.service.name }}-secret
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_DB
-              value: movie_db_dev
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.service.name }}-config
+                  key: POSTGRES_DB
           ports:
             - name: movie-port
               containerPort: {{ .Values.service.port }}

@@ -18,17 +18,23 @@ spec:
             name: {{ .Values.service.name }}-service
             port:
               number: {{ .Values.service.port }}
-      - path: /api/v1/movies/
+      - path: /api/v1/casts/
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
               number: {{ .Values.service.port }}
-      - path: /api/v1/movies/docs
+      - path: /api/v1/casts/docs
         pathType: Prefix
         backend:
           service:
             name: {{ .Values.service.name }}-service
             port:
               number: {{ .Values.service.port }}
+              
+
+
+
+          
+     

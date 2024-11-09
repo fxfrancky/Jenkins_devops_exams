@@ -1,11 +1,11 @@
 replicaCount: 1
 image:
   repository: "postgres"
-  tag: "12.1-alpine"
+  tag: "14"
   pullPolicy: Always
   name: "moviedb"
   namespace: "dev"
-  label: "moviedb"
+  label: "movie"
 service:
   name: moviedb-port
   type: ClusterIP

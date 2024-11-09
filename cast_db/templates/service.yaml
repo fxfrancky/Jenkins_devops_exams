@@ -4,13 +4,13 @@ metadata:
   name: {{ .Values.image.name }}-service
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: castdb
+    app: {{ .Values.image.label }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: castdb-port
+      name: {{ .Values.image.name }}-port
   selector:
-    app: castdb
+    app: {{ .Values.image.label }}
