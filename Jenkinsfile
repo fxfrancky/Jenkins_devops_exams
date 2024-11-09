@@ -13,8 +13,6 @@ stages {
                 sh '''
                  docker rm -f movie_service
                  docker rm -f cast_service
-                 docker rm -f castdb-statefulset-0
-                 docker rm -f moviedb-statefulset-0 
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
 				 sleep 6
