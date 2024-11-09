@@ -9,11 +9,11 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: postgres
+      app: {{ .Values.image.name }}
   template:
     metadata:
       labels:
-        app: postgres
+        app: {{ .Values.image.name }}
     spec:
       containers:
         - name: {{ .Values.image.name }}
