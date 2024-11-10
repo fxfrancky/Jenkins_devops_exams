@@ -63,6 +63,8 @@ stages {
                 }
             }
         }
+		
+		// DEPLOYMENT OF CAST DB - ENV = DEV
 
         stage('Deploiement cast db en dev'){
             environment
@@ -86,6 +88,8 @@ stages {
             }
         }
 		
+		// DEPLOYMENT OF MOVIE DB - ENV = DEV
+		
 		stage('Deploiement movie db en dev'){
 			environment
 			{
@@ -108,6 +112,8 @@ stages {
             }
         }
 
+		// DEPLOYMENT OF CAST SERVICE - ENV = DEV
+		
 		stage('Deploiement cast service en dev'){
 			environment
 			{
@@ -127,6 +133,8 @@ stages {
                 }
             }
         }
+		
+		// DEPLOYMENT OF MOVIE SERVICE - ENV = DEV
 
 		stage('Deploiement movie service en dev'){
 			environment
@@ -143,6 +151,99 @@ stages {
                 cp fastapi/values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=dev --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
+                '''
+                }
+            }
+        }
+		
+		
+		        // DEPLOYMENT OF CAST DB - ENV = STAGING
+
+        stage('Deploiement cast db en staging'){
+            environment
+            {
+				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd cast_db
+				kubectl apply -f ./secret-staging.yaml -n staging
+                cp values-staging.yaml values.yml
+                cat values.yml
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=staging --set image.namespace=staging --set service.name=castdb --set image.name=castdb
+				sleep 10
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE DB - ENV = STAGING
+		
+		stage('Deploiement movie db en staging'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd movie_db
+				kubectl apply -f ./secret-staging.yaml -n staging
+                cp values-staging.yaml values.yml
+                cat values.yml
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=staging --set image.namespace=staging --set service.name=moviedb --set image.name=moviedb
+				sleep 10
+                '''
+                }
+            }
+        }
+
+		// DEPLOYMENT OF CAST SERVICE - ENV = STAGING
+		
+		stage('Deploiement cast service en staging'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd cast_service
+                cp fastapi/values-staging.yaml values.yml
+                cat values.yml
+                helm upgrade --install cast-deployment fastapi --values=values.yml --namespace=staging --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE SERVICE - ENV = STAGING
+
+		stage('Deploiement movie service en staging'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd movie_service
+                cp fastapi/values-staging.yaml values.yml
+                cat values.yml
+                helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=staging --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
                 '''
                 }
             }

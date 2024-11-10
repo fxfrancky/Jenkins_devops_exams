@@ -1,11 +1,11 @@
 replicaCount: 1
 image:
   repository: "postgres"
-  tag: "14"
+  tag: "15.2"
   pullPolicy: Always
   name: "castdb"
-  namespace: "staging"
-  label: "cast"
+  namespace: "dev"
+  label: "staging"
 service:
   name: castdb-port
   type: ClusterIP

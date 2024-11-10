@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: "postgres"
-  tag: "14"
+  tag: "15.2"
   pullPolicy: Always
   name: "castdb"
   namespace: "prod"
