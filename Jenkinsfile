@@ -353,14 +353,11 @@ stages {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
 
-		when {
-                beforeInput true
-                branch 'master'
-            }
-            input {
-                message "Deploy to production?"
-                id "simple-input"
-            }
+        timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+		when {   branch 'master'  }
+
 
             steps {
 
@@ -389,14 +386,10 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-			when {
-                beforeInput true
-                branch 'master'
-            }
-            input {
-                message "Deploy to production?"
-                id "simple-input"
-            }
+        timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+		when {   branch 'master'  }
 
             steps {
 			
@@ -423,14 +416,10 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-			when {
-                beforeInput true
-                branch 'master'
-            }
-            input {
-                message "Deploy to production?"
-                id "simple-input"
-            }
+        timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+		when {   branch 'master'  }
             steps {
 
                 script {
@@ -454,14 +443,10 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-			when {
-                beforeInput true
-                branch 'master'
-            }
-            input {
-                message "Deploy to production?"
-                id "simple-input"
-            }
+        timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+		when {   branch 'master'  }
             steps {
                 script {
                 sh '''
