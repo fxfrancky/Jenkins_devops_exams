@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ .Values.image.name }}-statefulset
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: {{ .Values.image.repository }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.image.name }}
+      app: {{ .Values.image.repository }}
   template:
     metadata:
       labels:
-        app: {{ .Values.image.name }}
+        app: {{ .Values.image.repository }}
     spec:
       containers:
         - name: {{ .Values.image.name }}
@@ -41,12 +41,12 @@ spec:
                 key: POSTGRES_PASSWORD 
           - name: POSTGRES_HOST_AUTH_METHOD
             value: trust                
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgresdata2
+          volumeMounts:                 # indicates which Volume (from spec.template.spec.volumes) should be used
+            - name: postgresdata                # name of the Volume
+              mountPath: /var/lib/postgresql/data   # path inside the container
       volumes:
-      - name: postgresdata2
+      - name: postgresdata
         persistentVolumeClaim:
-          claimName: postgres-pv-claim2
+          claimName: postgres-pv-claim
           
           

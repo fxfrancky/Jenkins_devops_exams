@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app: {{ .Values.image.name }}
+    app: {{ .Values.image.repository }}
   name: postgres-pv-claim
   namespace: {{ .Values.image.namespace }}
 spec:

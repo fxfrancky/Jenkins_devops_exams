@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ .Values.image.name }}-statefulset
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.name }}
+    app: {{ .Values.image.repository }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.image.name }}
+      app: {{ .Values.image.repository }}
   template:
     metadata:
       labels:
-        app: {{ .Values.image.name }}
+        app: {{ .Values.image.repository }}
     spec:
       containers:
         - name: {{ .Values.image.name }}
