@@ -353,16 +353,13 @@ stages {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
 
-			when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
+			when {  branch 'master' }
 
             steps {
-			
-            // this require a manuel validation in order to deploy on production environment
-                    timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
+		// this require a manuel validation in order to deploy on production environment
+				timeout(time: 15, unit: "MINUTES") {
+					input message: 'Do you want to deploy in production ?', ok: 'Yes'
+				}
 
 					script {
 					sh '''
@@ -389,9 +386,7 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-			when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
+			when {  branch 'master' }
 
             steps {
 			
@@ -424,10 +419,7 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 
-			when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
-			
+			when {  branch 'master' }
             steps {
 			
             // this require a manuel validation in order to deploy on production environment
@@ -457,9 +449,7 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 
-			when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
+			when {  branch 'master' }
             steps {
 			
             // this require a manuel validation in order to deploy on production environment
