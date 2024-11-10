@@ -353,9 +353,7 @@ stages {
             {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
-            when {
-                branch 'master'
-            }
+			
             steps {
 
             // this require a manuel validation in order to deploy on production environment
@@ -363,20 +361,24 @@ stages {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
 
+                if (env.BRANCH_NAME == 'master') {
+				  
+				   script {
+					sh '''
+					rm -Rf .kube
+					mkdir .kube
+					echo $KUBECONFIG > .kube/config
+					cd cast_db
+					kubectl apply -f ./secret-prod.yaml -n prod
+					cp values-prod.yaml values.yml
+					cat values.yml
+					helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
+					sleep 10
+					'''
+					}
+				} 
 
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                echo $KUBECONFIG > .kube/config
-				cd cast_db
-				kubectl apply -f ./secret-prod.yaml -n prod
-                cp values-prod.yaml values.yml
-                cat values.yml
-                helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
-				sleep 10
-                '''
-                }
+               
             }
         }
 		
@@ -388,32 +390,37 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-            when {
-                branch 'master'
-            }
 
             steps {
 			
             // this require a manuel validation in order to deploy on production environment
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }			
-			
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                echo $KUBECONFIG > .kube/config
-				cd movie_db
-				kubectl apply -f ./secret-prod.yaml -n prod
-                cp values-prod.yaml values.yml
-                cat values.yml
-                helm upgrade --install moviedb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=moviedb --set image.name=moviedb
-				sleep 10
-                '''
-                }
+                    }	
+
+
+                if (env.BRANCH_NAME == 'master') {
+				  
+				   script {
+					sh '''
+					rm -Rf .kube
+					mkdir .kube
+					echo $KUBECONFIG > .kube/config
+					cd movie_db
+					kubectl apply -f ./secret-prod.yaml -n prod
+					cp values-prod.yaml values.yml
+					cat values.yml
+					helm upgrade --install moviedb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=moviedb --set image.name=moviedb
+					sleep 10
+					'''
+					}
+				} 
+
+               
             }
-        }
+        }					
+			
+                
 
 		// DEPLOYMENT OF CAST SERVICE - ENV = PROD
 		
@@ -422,10 +429,7 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-	
-            when {
-                branch 'master'
-            }
+
 
             steps {
 			
@@ -434,20 +438,27 @@ stages {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
 					
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                cat $KUBECONFIG > .kube/config
-				cd cast_service
-                cp fastapi/values-prod.yaml values.yml
-                cat values.yml
-                helm upgrade --install cast-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
-                '''
-                }
+				
+				if (env.BRANCH_NAME == 'master') {
+				  
+				    script {
+						sh '''
+						rm -Rf .kube
+						mkdir .kube
+						cat $KUBECONFIG > .kube/config
+						cd cast_service
+						cp fastapi/values-prod.yaml values.yml
+						cat values.yml
+						helm upgrade --install cast-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
+						'''
+						}
+				} 
+
+               
             }
-        }
+        }					
 		
+
 		// DEPLOYMENT OF MOVIE SERVICE - ENV = PROD
 
 		stage('Deploiement movie service en prod'){
@@ -455,10 +466,7 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-			
-            when {
-                branch 'master'
-            }
+
 
             steps {
 			
@@ -466,22 +474,25 @@ stages {
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
-			
+
+				if (env.BRANCH_NAME == 'master') {
+				  
                 script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                cat $KUBECONFIG > .kube/config
-				cd movie_service
-                cp fastapi/values-prod.yaml values.yml
-                cat values.yml
-                helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
-                '''
-                }
+					sh '''
+					rm -Rf .kube
+					mkdir .kube
+					cat $KUBECONFIG > .kube/config
+					cd movie_service
+					cp fastapi/values-prod.yaml values.yml
+					cat values.yml
+					helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
+					'''
+					}
+				} 
+
+               
             }
-        }	
-		
-		
-		
+        }			
+               
 }
 }
