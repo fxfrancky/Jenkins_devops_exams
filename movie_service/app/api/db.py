@@ -10,11 +10,11 @@ POSTGRES_HOST = "moviedb-service"
 PORT = 5432
 
 DATABASE_URI = "postgresql+psycopg2://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}".format(
-        db_username=POSTGRES_DB, 
+        db_username=POSTGRES_USER, 
         db_password=POSTGRES_PASSWORD,
         db_host=POSTGRES_HOST,
         db_port=PORT,
-        db_name=POSTGRES_USER
+        db_name=POSTGRES_DB
     ) 
 engine = create_engine(DATABASE_URI)
 metadata = MetaData()
