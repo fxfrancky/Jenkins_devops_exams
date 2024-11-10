@@ -353,11 +353,14 @@ stages {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
 
-        timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
-		when {   branch 'master'  }
-
+		when {
+                beforeInput true
+                branch 'master'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
 
             steps {
 
@@ -386,10 +389,15 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-        timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
-		when {   branch 'master'  }
+			when {
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
 
             steps {
 			
@@ -416,10 +424,15 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-        timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
-		when {   branch 'master'  }
+			when {
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
             steps {
 
                 script {
@@ -443,11 +456,22 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-        timeout(time: 15, unit: "MINUTES") {
+			when {
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
+            steps {
+			
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
-		when {   branch 'master'  }
-            steps {
+
                 script {
                 sh '''
                 rm -Rf .kube
