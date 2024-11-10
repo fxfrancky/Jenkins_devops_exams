@@ -353,33 +353,29 @@ stages {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
 
+			when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
 
             steps {
 			
-			if (env.BRANCH_NAME == 'master') {
-
             // this require a manuel validation in order to deploy on production environment
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
 
-
-
-				
-				
-						script {
-						sh '''
-						rm -Rf .kube
-						mkdir .kube
-						echo $KUBECONFIG > .kube/config
-						cd cast_db
-						kubectl apply -f ./secret-prod.yaml -n prod
-						cp values-prod.yaml values.yml
-						cat values.yml
-						helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
-						sleep 10
-						'''
-						}
+					script {
+					sh '''
+					rm -Rf .kube
+					mkdir .kube
+					echo $KUBECONFIG > .kube/config
+					cd cast_db
+					kubectl apply -f ./secret-prod.yaml -n prod
+					cp values-prod.yaml values.yml
+					cat values.yml
+					helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
+					sleep 10
+					'''
 				} 
 
             }
@@ -393,6 +389,9 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
+			when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
 
             steps {
 			
@@ -400,12 +399,6 @@ stages {
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }			
-			
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
 			
                 script {
                 sh '''
@@ -431,7 +424,10 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 
-
+			when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
+			
             steps {
 			
             // this require a manuel validation in order to deploy on production environment
@@ -439,11 +435,6 @@ stages {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
 
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
                 script {
                 sh '''
                 rm -Rf .kube
@@ -466,19 +457,16 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 
-
+			when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
             steps {
 			
             // this require a manuel validation in order to deploy on production environment
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Do you want to deploy in production ?', ok: 'Yes'
                     }
-			
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
+
                 script {
                 sh '''
                 rm -Rf .kube
