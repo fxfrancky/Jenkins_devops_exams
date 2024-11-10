@@ -18,6 +18,7 @@ spec:
       containers:
         - name: {{ .Values.image.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "IfNotPresent"
           ports:
             - name: {{ .Values.service.name }}
               containerPort: 5432
@@ -42,8 +43,8 @@ spec:
             value: trust                
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgres-pv-claim
+              name: postgresdata
       volumes:
-      - name: postgres-pv-claim
+      - name: postgresdata
         persistentVolumeClaim:
           claimName: postgres-pv-claim

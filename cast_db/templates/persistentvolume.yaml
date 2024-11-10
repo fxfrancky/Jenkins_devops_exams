@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-pv
+  name: postgres-pv-cast
   namespace: {{ .Values.image.namespace }}
   labels:
     type: local
+    app: {{ .Values.image.name }}
 spec:
   storageClassName: manual
   capacity:
-    storage: 300M
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
