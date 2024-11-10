@@ -4,8 +4,8 @@ image:
   tag: "15.2"
   pullPolicy: Always
   name: "castdb"
-  namespace: "dev"
-  label: "staging"
+  namespace: "staging"
+  label: "cast"
 service:
   name: castdb-port
   type: ClusterIP
