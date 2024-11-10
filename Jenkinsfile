@@ -16,10 +16,10 @@ stages {
                  docker rm -f castdb-statefulset-0
                  docker rm -f moviedb-statefulset-0 
 				 cd movie_db
-				 helm secrets upgrade --install secret-movietdb-chart -f secret.yaml
+				 kubectl create -f ./secret.yaml
 				 cd ..
 				 cd cast_db
-				 helm secrets upgrade --install secret-castdb-chart -f secret.yaml
+				 kubectl create -f ./secret.yaml
 				 cd ..
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
