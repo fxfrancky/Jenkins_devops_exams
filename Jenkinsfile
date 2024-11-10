@@ -15,7 +15,6 @@ stages {
                  docker rm -f cast_service
                  docker rm -f castdb-statefulset-0
                  docker rm -f moviedb-statefulset-0 
-				 helm plugin install https://github.com/futuresimple/helm-secrets
 				 cd movie_db
 				 helm secrets upgrade --install secret-movietdb-chart -f secret.yaml
 				 cd ..
