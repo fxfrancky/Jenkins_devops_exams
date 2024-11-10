@@ -4,10 +4,10 @@ metadata:
   name: movie-service
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.service.name }}
+    app: {{ .Values.service.label }}
 spec:
   selector:
-    app: {{ .Values.service.name }}
+    app: {{ .Values.service.label }}
   ports:
   - name: movie-port
     protocol: TCP

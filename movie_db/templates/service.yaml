@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.image.name }}-service
   namespace: {{ .Values.image.namespace }}
   labels:
-    app: {{ .Values.image.repository }}
+    app: {{ .Values.image.name }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: {{ .Values.image.label }}-port
   selector:
-    app: {{ .Values.image.repository }}
+    app: {{ .Values.image.name }}
