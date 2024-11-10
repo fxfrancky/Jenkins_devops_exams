@@ -15,12 +15,6 @@ stages {
                  docker rm -f cast_service
                  docker rm -f castdb-statefulset-0
                  docker rm -f moviedb-statefulset-0 
-				 cd movie_db
-				 kubectl create -f ./secret.yaml
-				 cd ..
-				 cd cast_db
-				 kubectl create -f ./secret.yaml
-				 cd ..
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
 				 sleep 10
@@ -84,6 +78,7 @@ stages {
                 mkdir .kube
                 echo $KUBECONFIG > .kube/config
 				cd cast_db
+				kubectl create -f ./secret.yaml -n dev
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
@@ -105,6 +100,7 @@ stages {
                 mkdir .kube
                 echo $KUBECONFIG > .kube/config
 				cd movie_db
+				kubectl create -f ./secret.yaml -n dev
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
