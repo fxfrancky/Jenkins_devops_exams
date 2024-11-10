@@ -77,10 +77,11 @@ stages {
                 echo $KUBECONFIG > .kube/config
 				cd cast_db
 				kubectl apply -f ./secret-dev.yaml -n dev
+				sleep 6
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
-				sleep 10
+				sleep 15
                 '''
                 }
             }
@@ -99,10 +100,11 @@ stages {
                 echo $KUBECONFIG > .kube/config
 				cd movie_db
 				kubectl apply -f ./secret-dev.yaml -n dev
+				sleep 6
                 cp values-dev.yaml values.yml
                 cat values.yml
                 helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
-				sleep 10
+				sleep 15
                 '''
                 }
             }
