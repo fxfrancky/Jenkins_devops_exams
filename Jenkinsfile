@@ -365,17 +365,22 @@ stages {
             steps {
 
 					script {
-					sh '''
-					rm -Rf .kube
-					mkdir .kube
-					echo $KUBECONFIG > .kube/config
-					cd cast_db
-					kubectl apply -f ./secret-prod.yaml -n prod
-					cp values-prod.yaml values.yml
-					cat values.yml
-					helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
-					sleep 10
+						if (env.BRANCH_NAME == 'master') {
+							sh '''
+							rm -Rf .kube
+							mkdir .kube
+							echo $KUBECONFIG > .kube/config
+							cd cast_db
+							kubectl apply -f ./secret-prod.yaml -n prod
+							cp values-prod.yaml values.yml
+							cat values.yml
+							helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
+							sleep 10
 					'''
+						}
+					
+					
+					
 				} 
 
             }
