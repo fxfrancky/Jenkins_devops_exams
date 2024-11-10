@@ -8,7 +8,6 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB : str = os.getenv("POSTGRES_DB")
 POSTGRES_HOST = "moviedb-service"
 PORT = 5432
-
 DATABASE_URI = "postgresql+psycopg2://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}".format(
         db_username=POSTGRES_USER, 
         db_password=POSTGRES_PASSWORD,
