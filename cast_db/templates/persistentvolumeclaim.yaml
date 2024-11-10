@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: {{ .Values.image.repository }}
-  name: postgres-pv-claim
+  name: postgres-pv-claim-{{ .Values.image.namespace }}
   namespace: {{ .Values.image.namespace }}
 spec:
   storageClassName: manual

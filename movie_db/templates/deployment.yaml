@@ -47,5 +47,5 @@ spec:
       volumes:
       - name: postgresdata2
         persistentVolumeClaim:
-          claimName: postgres-pv-claim2
+          claimName: postgres-pv-claim2-{{ .Values.image.namespace }}
 
