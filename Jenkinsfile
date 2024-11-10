@@ -249,5 +249,254 @@ stages {
             }
         }
 		
+		
+				
+		
+		// DEPLOYMENT OF CAST DB - ENV = QA
+
+        stage('Deploiement cast db en qa'){
+            environment
+            {
+				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd cast_db
+				kubectl apply -f ./secret-qa.yaml -n qa
+                cp values-qa.yaml values.yml
+                cat values.yml
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=qa --set image.namespace=qa --set service.name=castdb --set image.name=castdb
+				sleep 10
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE DB - ENV = QA
+		
+		stage('Deploiement movie db en qa'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd movie_db
+				kubectl apply -f ./secret-qa.yaml -n qa
+                cp values-qa.yaml values.yml
+                cat values.yml
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=qa --set image.namespace=qa --set service.name=moviedb --set image.name=moviedb
+				sleep 10
+                '''
+                }
+            }
+        }
+
+		// DEPLOYMENT OF CAST SERVICE - ENV = QA
+		
+		stage('Deploiement cast service en qa'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd cast_service
+                cp fastapi/values-qa.yaml values.yml
+                cat values.yml
+                helm upgrade --install cast-deployment fastapi --values=values.yml --namespace=qa --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE SERVICE - ENV = QA
+
+		stage('Deploiement movie service en qa'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd movie_service
+                cp fastapi/values-qa.yaml values.yml
+                cat values.yml
+                helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=qa --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
+                '''
+                }
+            }
+        }
+		
+			
+		
+		// DEPLOYMENT OF CAST DB - ENV = PROD
+
+        stage('Deploiement cast db en prod'){
+            environment
+            {
+				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+			}
+
+			  when {
+				expression {
+				  env.GIT_BRANCH == 'master'
+				  }
+			  }
+
+
+            steps {
+
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+
+
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd cast_db
+				kubectl apply -f ./secret-prod.yaml -n prod
+                cp values-prod.yaml values.yml
+                cat values.yml
+                helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
+				sleep 10
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE DB - ENV = PROD
+		
+		stage('Deploiement movie db en prod'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+			
+
+			  when {
+				expression {
+				  env.GIT_BRANCH == 'master'
+				  }
+			  }
+
+            steps {
+			
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }			
+			
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                echo $KUBECONFIG > .kube/config
+				cd movie_db
+				kubectl apply -f ./secret-prod.yaml -n prod
+                cp values-prod.yaml values.yml
+                cat values.yml
+                helm upgrade --install moviedb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=moviedb --set image.name=moviedb
+				sleep 10
+                '''
+                }
+            }
+        }
+
+		// DEPLOYMENT OF CAST SERVICE - ENV = PROD
+		
+		stage('Deploiement cast service en prod'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+	
+		  when {
+			expression {
+			  env.GIT_BRANCH == 'master'
+			  }
+		  }
+
+
+            steps {
+			
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+					
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd cast_service
+                cp fastapi/values-prod.yaml values.yml
+                cat values.yml
+                helm upgrade --install cast-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_CAST --set image.tag=$DOCKER_TAG --set service.port=8002 --set env.SERVER_PORT=8002 --set service.name=cast
+                '''
+                }
+            }
+        }
+		
+		// DEPLOYMENT OF MOVIE SERVICE - ENV = PROD
+
+		stage('Deploiement movie service en prod'){
+			environment
+			{
+				KUBECONFIG = credentials("config")
+			}
+			
+			
+
+		  when {
+			expression {
+			  env.GIT_BRANCH == 'master'
+			  }
+		  }
+
+            steps {
+			
+            // this require a manuel validation in order to deploy on production environment
+                    timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
+			
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                cat $KUBECONFIG > .kube/config
+				cd movie_service
+                cp fastapi/values-prod.yaml values.yml
+                cat values.yml
+                helm upgrade --install movie-deployment fastapi --values=values.yml --namespace=prod --set image.repository=$DOCKER_ID/$DOCKER_IMAGE_MOVIE --set image.tag=$DOCKER_TAG --set service.port=8001 --set env.SERVER_PORT=8001 --set service.name=movie
+                '''
+                }
+            }
+        }	
+		
+		
+		
 }
 }
