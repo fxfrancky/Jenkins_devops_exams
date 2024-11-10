@@ -353,17 +353,11 @@ stages {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
 
-		when {
-                beforeInput true
-                branch 'master'
-            }
-            input {
-                message "Deploy to production?"
-                id "simple-input"
-            }
-
             steps {
 
+				timeout(time: 15, unit: "MINUTES") {
+                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
+                    }
 					script {
 						if (env.BRANCH_NAME == 'master') {
 							sh '''
