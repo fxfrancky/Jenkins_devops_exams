@@ -355,6 +355,8 @@ stages {
 
 
             steps {
+			
+			if (env.BRANCH_NAME == 'master') {
 
             // this require a manuel validation in order to deploy on production environment
                     timeout(time: 15, unit: "MINUTES") {
@@ -362,24 +364,24 @@ stages {
                     }
 
 
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                echo $KUBECONFIG > .kube/config
-				cd cast_db
-				kubectl apply -f ./secret-prod.yaml -n prod
-                cp values-prod.yaml values.yml
-                cat values.yml
-                helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
-				sleep 10
-                '''
-                }
+
+				
+				
+						script {
+						sh '''
+						rm -Rf .kube
+						mkdir .kube
+						echo $KUBECONFIG > .kube/config
+						cd cast_db
+						kubectl apply -f ./secret-prod.yaml -n prod
+						cp values-prod.yaml values.yml
+						cat values.yml
+						helm upgrade --install castdb-chart . --values=values.yml --namespace=prod --set image.namespace=prod --set service.name=castdb --set image.name=castdb
+						sleep 10
+						'''
+						}
+				} 
+
             }
         }
 		
