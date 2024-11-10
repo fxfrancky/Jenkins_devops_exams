@@ -15,6 +15,13 @@ stages {
                  docker rm -f cast_service
                  docker rm -f castdb-statefulset-0
                  docker rm -f moviedb-statefulset-0 
+				 helm plugin install https://github.com/futuresimple/helm-secrets
+				 cd movie_db
+				 helm secrets upgrade --install secret-movietdb-chart -f secret.yaml
+				 cd ..
+				 cd cast_db
+				 helm secrets upgrade --install secret-castdb-chart -f secret.yaml
+				 cd ..
 				 cd movie_service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG .
 				 sleep 10
@@ -80,7 +87,6 @@ stages {
 				cd cast_db
                 cp values-dev.yaml values.yml
                 cat values.yml
-				helm secrets upgrade --install secret-castdb-chart -f secret.yaml
                 helm upgrade --install castdb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=castdb --set image.name=castdb
 				sleep 10
                 '''
@@ -102,7 +108,6 @@ stages {
 				cd movie_db
                 cp values-dev.yaml values.yml
                 cat values.yml
-				helm secrets upgrade --install secret-moviedb-chart -f secret.yaml
                 helm upgrade --install moviedb-chart . --values=values.yml --namespace=dev --set image.namespace=dev --set service.name=moviedb --set image.name=moviedb
 				sleep 10
                 '''
