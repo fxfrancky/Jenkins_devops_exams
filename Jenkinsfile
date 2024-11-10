@@ -354,16 +354,15 @@ stages {
 			}
 
 		when {
-			expression {
-                      return (env.BRANCH_NAME=="master")
-                   }
-		}
+                beforeInput true
+                branch 'master'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
 
             steps {
-		// this require a manuel validation in order to deploy on production environment
-				timeout(time: 15, unit: "MINUTES") {
-					input message: 'Do you want to deploy in production ?', ok: 'Yes'
-				}
 
 					script {
 					sh '''
@@ -390,18 +389,16 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-		when {
-			expression {
-                      return (env.BRANCH_NAME=="master")
-                   }
-		}
+			when {
+                beforeInput true
+                branch 'master'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
 
             steps {
-			
-            // this require a manuel validation in order to deploy on production environment
-                    timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }			
 			
                 script {
                 sh '''
@@ -426,17 +423,15 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-		when {
-			expression {
-                      return (env.BRANCH_NAME=="master")
-                   }
-		}
+			when {
+                beforeInput true
+                branch 'master'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
             steps {
-			
-            // this require a manuel validation in order to deploy on production environment
-                    timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
 
                 script {
                 sh '''
@@ -459,18 +454,15 @@ stages {
 			{
 				KUBECONFIG = credentials("config")
 			}
-		when {
-			expression {
-                      return (env.BRANCH_NAME=="master")
-                   }
-		}
+			when {
+                beforeInput true
+                branch 'master'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
             steps {
-			
-            // this require a manuel validation in order to deploy on production environment
-                    timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Do you want to deploy in production ?', ok: 'Yes'
-                    }
-
                 script {
                 sh '''
                 rm -Rf .kube
