@@ -37,10 +37,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.image.label }}-secret
-                key: POSTGRES_PASSWORD    
-              volumeMounts:
-                - mountPath: /var/lib/postgresql/data
-                  name: postgres-pv-claim
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust                
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-pv-claim
       volumes:
       - name: postgres-pv-claim
         persistentVolumeClaim:
