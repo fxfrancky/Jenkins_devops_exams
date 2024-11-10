@@ -353,14 +353,9 @@ stages {
             {
 				KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
 			}
-
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
-
-
+            when {
+                branch 'master'
+            }
             steps {
 
             // this require a manuel validation in order to deploy on production environment
@@ -393,12 +388,9 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-
-			  when {
-				expression {
-				  env.GIT_BRANCH == 'master'
-				  }
-			  }
+            when {
+                branch 'master'
+            }
 
             steps {
 			
@@ -431,12 +423,9 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 	
-		  when {
-			expression {
-			  env.GIT_BRANCH == 'master'
-			  }
-		  }
-
+            when {
+                branch 'master'
+            }
 
             steps {
 			
@@ -467,13 +456,9 @@ stages {
 				KUBECONFIG = credentials("config")
 			}
 			
-			
-
-		  when {
-			expression {
-			  env.GIT_BRANCH == 'master'
-			  }
-		  }
+            when {
+                branch 'master'
+            }
 
             steps {
 			
