@@ -48,5 +48,15 @@ spec:
       - name: postgresdata
         persistentVolumeClaim:
           claimName: postgres-pv-claim
-          
+ ---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: movie-secret
+  namespace: {{ .Values.image.namespace }}
+data:
+  POSTGRES_USER: bW92aWVfZGJfdXNlcg==
+  POSTGRES_PASSWORD: bW92aWVfZGJfcGFzc3dvcmQ=
+  POSTGRES_DB: bW92aWVfZGJfZGV2          
           

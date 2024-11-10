@@ -48,3 +48,14 @@ spec:
       - name: postgresdata
         persistentVolumeClaim:
           claimName: postgres-pv-claim
+ ---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: cast-secret
+  namespace: {{ .Values.image.namespace }}
+data:
+  POSTGRES_USER: Y2FzdF9kYl91c2VybmFtZQ==
+  POSTGRES_PASSWORD: Y2FzdF9kYl9wYXNzd29yZA==
+  POSTGRES_DB: Y2FzdF9kYl9kZXY=
