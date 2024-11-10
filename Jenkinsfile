@@ -157,7 +157,7 @@ stages {
         }
 		
 		
-		        // DEPLOYMENT OF CAST DB - ENV = STAGING
+		// DEPLOYMENT OF CAST DB - ENV = STAGING
 
         stage('Deploiement cast db en staging'){
             environment

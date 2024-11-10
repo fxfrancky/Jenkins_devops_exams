@@ -4,16 +4,16 @@ metadata:
   name: movie-deployment
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.service.label }}
+    app: {{ .Values.service.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.service.label }}
+      app: {{ .Values.service.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.service.label }}
+        app: {{ .Values.service.name }}
     spec:
       containers:
         - name: {{ .Values.service.name }}
