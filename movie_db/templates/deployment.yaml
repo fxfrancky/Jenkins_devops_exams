@@ -41,7 +41,7 @@ spec:
                 key: POSTGRES_PASSWORD 
           - name: POSTGRES_HOST_AUTH_METHOD
             value: trust                
-          volumeMounts:                 # indicates which Volume (from spec.template.spec.volumes) should be used
+          volumeMounts:   
             - name: postgresdata                # name of the Volume
               mountPath: /var/lib/postgresql/data   # path inside the container
       volumes:
